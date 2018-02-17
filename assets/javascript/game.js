@@ -1,3 +1,12 @@
+//first create an array of correct answers. 
+
+//     var questions= {
+//     q1: ["honda"],
+//     q2: ["hyundai"],
+//     q3: ["lexus"],
+//     q4: ["fiat"],
+//   }
+
 var answers= ["honda", "hyundai", "lexus", "fiat"]
 
 var alphabet= ("abcdefghijklmnopqrstuvwxyz").split("");
@@ -62,9 +71,9 @@ var remainingLetters = answer.length;
 function winScore(){
     document.querySelector("#win-counter").innerHTML = incScore
     if( incScore < 0) {
-        incScore = 0
+       incScore = 0
     }
-        } 
+}
 
 function loseScore() {
     document.querySelector("#loss-counter").innerHTML = decScore
@@ -77,8 +86,7 @@ function updateGuesses() {
     if(guesses < 0) {
         guesses = 0
     }
-    }
-
+}
 
 
 // updateScore();
@@ -96,6 +104,20 @@ function updateGuesses() {
     // }
     var userInput = String.fromCharCode(event.which).toLowerCase();
 
+    if(remainingLetters === 0){
+        alert("You win!")
+        incScore++
+        winScore()
+        return
+    }
+
+    if(guesses===0){
+        alert("You lose!")
+        decScore++
+        loseScore()
+        return
+    }
+    
 
 // //for (var i=0; i<correctAnswers.length; i++) {
   
@@ -103,6 +125,10 @@ function updateGuesses() {
     if (alphabet.indexOf(userInput) > -1) {
         guesses--
         updateGuesses()
+
+    var index = alphabet.indexOf(userInput);
+    if (index >= 0) {
+    alphabet.splice( index, 1 );}
 
 
         
@@ -112,9 +138,9 @@ function updateGuesses() {
             if (answer[j] === userInput) {
                 answerArray[j] = userInput;
                 document.getElementById("word-blanks").innerHTML = answerArray
-                incScore++ 
+                remainingLetters--
                 
-                winScore()
+            
                 
             }}
            
@@ -133,7 +159,7 @@ function updateGuesses() {
         else {
            var newDiv = $("<div>" + "wrong:" + userInput +  "</div>")
            $("#wrong-guesses").append(newDiv)
-           decScore++
+           
            loseScore()
 
         }
